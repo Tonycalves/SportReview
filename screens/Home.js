@@ -13,19 +13,10 @@ export default class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.headerText}>Home</Text>
-                <Button
-                    title="Go to Home"
-                    onPress={() => this.props.navigation.navigate("Home")}
-                />
                 <Text style={styles.headerText}>Create a New Profile Screen </Text>
                 <Button
                     title="Go to new Profile"
                     onPress={() => this.props.navigation.push("Profile")}
-                />
-                <Text style={styles.headerText}> Go Back </Text>
-                <Button
-                    title="Go Back"
-                    onPress={() => this.props.navigation.goBack()}
                 />
             </View>
 

@@ -52,6 +52,7 @@ class Login extends React.Component {
     };
 
     userLogin = (email, password) => {
+        this.setState({ isLogin: true });
         firebase.auth().signInWithEmailAndPassword(email, password)
                 .catch(error => {
                     switch (error.code) {
