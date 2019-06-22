@@ -40,7 +40,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
         Profile,
         Links,
         Settings,
-        Home
+
     },
     {
         navigationOptions: ({ navigation }) => {

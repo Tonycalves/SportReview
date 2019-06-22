@@ -1,8 +1,11 @@
 import * as React from "react";
-import {StyleSheet, View,Text} from "react-native";
+import {StyleSheet, View,Text,Dimensions} from "react-native";
 import {MapView, Location, Permissions} from 'expo';
 
 import {CurrentLocationButton} from "../components/CurrentLocationButton";
+
+const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
 
 export default class Run extends React.Component {
 constructor(props){
@@ -10,7 +13,7 @@ constructor(props){
 
   this.state={
     region:null,
-    coords: []
+    routeCoordinates: [],
   };
   this._getLocationAsync();
 }
@@ -18,6 +21,7 @@ constructor(props){
 componentDidMount() {
         navigator.geolocation.watchPosition(
             (position) => {
+              const { routeCoordinates } = this.state;
                 console.log(position);
                 let region = {
                   latitude: position.coords.latitude,
@@ -26,16 +30,20 @@ componentDidMount() {
                   longitudeDelta: 0.080,
                 }
                 this.setState({region: region})
-                let coords = {
-                  latitude : position.coords.latitude,
-                  longitude: position.coords.longitude,
-                }
-                this.setState({coords: coords})
-                console.log(coords);
-                //TODO: send user location to server
+                const { latitude, longitude } = position.coords;
+                const newCoordinate = {
+                  latitude,
+                  longitude
+                };
+                console.log({ newCoordinate });
+                this.setState({
+                  latitude,
+                  longitude,
+                  routeCoordinates: routeCoordinates.concat([newCoordinate])
+                });
             },
             (error) => this.setState({error: error.message}),
-            {enableHighAccuracy: false, timeout: 200000, maximumAge: 1000},
+            {enableHighAccuracy: false, timeout: 200, maximumAge: 1000},
         );
     }
 
@@ -68,7 +76,6 @@ centerMap(){
   })
 }
   render() {
-    console.log("this.state.region : "+this.state.region.latitude);
     return (
       <View style={styles.container}>
       <Text>MapView</Text>
@@ -79,9 +86,9 @@ centerMap(){
         showsCompass={true}
         rotateEnabled={true}
         ref={(map) => {this.map = map}}
-        style={{flex:1}}
+        style={styles.map}
         >
-
+        <MapView.Polyline coordinates={this.state.routeCoordinates} strokeWidth={7} />
       </MapView>
       </View>
     );
@@ -93,6 +100,8 @@ const styles = StyleSheet.create({
     flex:1,
   },
   map: {
-    flex:1,
+    width:WIDTH,
+    height:HEIGHT/3,
+    paddingTop:600,
   },
 });
