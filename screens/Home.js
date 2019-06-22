@@ -1,8 +1,10 @@
 import * as React from "react";
 import {StyleSheet, View,Text,Dimensions} from "react-native";
 import {MapView, Location, Permissions} from 'expo';
-
+import * as turf from '@turf/turf';
 import {CurrentLocationButton} from "../components/CurrentLocationButton";
+import Monitor from '../components/Monitor';
+
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -100,8 +102,6 @@ const styles = StyleSheet.create({
     flex:1,
   },
   map: {
-    width:WIDTH,
-    height:HEIGHT/3,
-    paddingTop:600,
+    flex:1,
   },
 });
