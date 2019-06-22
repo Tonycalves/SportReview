@@ -114,6 +114,9 @@ class Login extends React.Component {
           <TouchableOpacity onPress={this.props.change('forgot')} style={styles.touchable} activeOpacity={0.6}>
             <Text style={styles.forgotPassword}>Forgot Password</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={this.props.change('home')} style={styles.touchable} activeOpacity={0.6}>
+            <Text style={styles.forgotPassword}>Test</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )

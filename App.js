@@ -14,6 +14,7 @@ import FirebaseLogin from "./components/FirebaseLogin";
 import Profile from './screens/ProfileActivity';
 import Links from './screens/LinksScreen';
 import Settings from './screens/SettingsScreen';
+import Home from './screens/Home';
 
 import * as firebase from 'firebase';
 const config = {
@@ -38,7 +39,8 @@ const DashboardTabNavigator = createBottomTabNavigator(
     {
         Profile,
         Links,
-        Settings
+        Settings,
+        Home
     },
     {
         navigationOptions: ({ navigation }) => {
