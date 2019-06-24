@@ -33,16 +33,16 @@ export default class Register extends Component {
       isRepeatCorrect: repeat === '' || repeat !== password,
     }, () => {
       if(name !== '' && email !== '' && password !== '' && (repeat !== '' && repeat === password)){
-        this.createFireBaseAccount(name, email, password);
+        this.createAccount(name, email, password);
       } else {
         console.warn('Fill up all fields correctly');
       }
     })
   };
 
-  createFireBaseAccount = (name, email, password) => {
+  createAccount = (name, email, password) => {
     this.setState({ isCreatingAccount: true });
-    firebase.createFirebaseAccount(name, email, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(result => {
         if(result) this.props.change('login')();
         this.setState({ isCreatingAccount: false });

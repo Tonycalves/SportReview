@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { KeyboardAvoidingView, StyleSheet, ImageBackground } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, ImageBackground, Image } from 'react-native';
 import Login from './screens/Login';
 import Register from './screens/Register';
 import ForgotPassword from './screens/ForgotPassword';
 
 import Settings from '../../screens/SettingsScreen';
+import Activity from '../../screens/activity';
 import Home from '../../screens/Home';
 
 import { w } from './api/Dimensions';
 
 class FirebaseLogin extends Component {
+  static navigationOptions = {
+      drawerLabel: 'Login',
+      drawerIcon: ({focused, tintColor}) => (
+        <Image
+          source={require('../../assets/images/login.jpg')}
+          style={{width:50, height:50}}
+          />
+      ),
+  }
 
   state = {
     currentScreen: 'login', // can be: 'login' or 'register' or 'forgot'
@@ -20,25 +30,19 @@ class FirebaseLogin extends Component {
     this.setState({ currentScreen: screenName });
   };
 
-  userSuccessfullyLoggedIn = (user) => {
-    this.props.login(user);
-  };
+
 
   render() {
     let screenToShow;
-
     switch(this.state.currentScreen) {
       case 'login':
-        screenToShow = <Login change={this.changeScreen} success={this.userSuccessfullyLoggedIn}/>;
+        screenToShow = <Login change={this.changeScreen}/>;
         break;
       case 'register':
         screenToShow = <Register change={this.changeScreen} />;
         break;
       case 'forgot':
         screenToShow = <ForgotPassword change={this.changeScreen}/>;
-        break;
-      case 'settings':
-          screenToShow = <Settings change={this.changeScreen}/>;
         break;
       case 'home':
           screenToShow = <Home change={this.changeScreen}/>;
@@ -62,10 +66,6 @@ class FirebaseLogin extends Component {
     )
   }
 }
-
-FirebaseLogin.propTypes = {
-  login: PropTypes.func.isRequired,
-};
 
 FirebaseLogin.defaultProps = {
   background: null,

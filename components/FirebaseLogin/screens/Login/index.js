@@ -3,19 +3,29 @@ import { StyleSheet, View, TouchableOpacity, Text, Image} from 'react-native';
 import InputField from "../../components/InputField";
 import {w, h, totalSize} from '../../api/Dimensions';
 import * as firebase from 'firebase';
+import { Permissions, Location } from 'expo';
 
 const companyLogo = require('../../assets/companylogo.png');
 const email = require('../../assets/email.png');
 const password = require('../../assets/password.png');
 
 
-class Login extends React.Component {
-
+export default class Login extends React.Component {
+  static navigationOptions = {
+      drawerLabel: 'Login',
+      drawerIcon: ({focused, tintColor}) => (
+        <Image
+          source={require('../../../../assets/images/login.jpg')}
+          style={{width:50, height:50}}
+          />
+      ),
+  }
   state = {
     isEmailCorrect: false,
     isPasswordCorrect: false,
     isLogin: false,
 };
+
 
   getStarted = () => {
     const email = this.email.getInputValue();
@@ -73,6 +83,7 @@ class Login extends React.Component {
     };
 
   render() {
+
     return (
       <View style={styles.container}>
         <Image style={styles.icon} resizeMode="contain" source={companyLogo}/>
@@ -106,16 +117,12 @@ class Login extends React.Component {
                 : <Text style={styles.text}>Sign in</Text>}
         </TouchableOpacity>
 
-
         <View style={styles.textContainer}>
           <TouchableOpacity onPress={this.props.change('register')} style={styles.touchable} activeOpacity={0.6}>
             <Text style={styles.createAccount}>Create Account</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.props.change('forgot')} style={styles.touchable} activeOpacity={0.6}>
             <Text style={styles.forgotPassword}>Forgot Password</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.props.change('home')} style={styles.touchable} activeOpacity={0.6}>
-            <Text style={styles.forgotPassword}>Test</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -177,5 +184,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
-export default Login;

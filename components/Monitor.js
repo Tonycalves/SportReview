@@ -3,13 +3,13 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import * as React from 'react';
 import {
-  StyleSheet, View, SafeAreaView, Text,
+  StyleSheet, View, SafeAreaView, Text,TouchableOpacity,
 } from 'react-native';
 import { Svg } from 'expo';
 import { Feather as Icon } from '@expo/vector-icons';
 import SVGPath from 'art/modes/svg/path';
 import * as path from 'svg-path-properties';
-
+import {w, h, totalSize} from '../components/FirebaseLogin/api/Dimensions';
 const { Path } = Svg;
 const radius = 100;
 const strokeWidth = 20;
@@ -46,9 +46,10 @@ export default class Progress extends React.PureComponent<ProgressProps, Progres
   }
 
   render(): React.Node {
-    const { distance, pace, totalDistance } = this.props;
+    const { distance, totalDistance } = this.props;
     const { duration } = this.state;
     const ratio = distance === 0 ? 0 : distance / totalDistance;
+
     return (
       <SafeAreaView style={styles.monitor}>
         <View style={styles.progressContainer}>
@@ -68,18 +69,16 @@ export default class Progress extends React.PureComponent<ProgressProps, Progres
           </Svg>
           <View style={styles.progressLabelContainer}>
             <Text style={styles.progressLabel}>{_.round(distance)}</Text>
+            <Text style={styles.progressLabel2}>meters</Text>
           </View>
         </View>
         <View style={styles.params}>
-          <View style={styles.row}>
-            <Icon name="watch" color="white" size={28} />
-            <Text style={styles.value}>{formatDuration(pace)}</Text>
-          </View>
           <View style={styles.row}>
             <Icon name="clock" color="white" size={28} />
             <Text style={styles.value}>{formatDuration(duration)}</Text>
           </View>
         </View>
+
       </SafeAreaView>
     );
   }
@@ -105,6 +104,23 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 72,
     marginTop: 64,
+  },
+  progressLabel2: {
+    color: 'white',
+    fontSize: 55,
+  },
+  button: {
+      width: 10,
+      height: 10,
+      paddingVertical: w(2),
+      backgroundColor: 'blue',
+      borderRadius: w(10),
+      marginTop: h(60),
+  },
+  text: {
+      fontSize: 26,
+      textTransform: 'uppercase',
+      color: '#FFFFFF',
   },
   params: {
     flexDirection: 'row',
